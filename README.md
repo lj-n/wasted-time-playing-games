@@ -15,7 +15,7 @@
 > 🛸 The profile associated with the number should be public **or** the profile that generated the API key.
 
 ```bash
-deno run -A https://github.com/lj-n/wasted-time-playing-games/blob/main/mod.ts --apiKey="Steam Api Key here" --steamId="Steam User ID here"
+deno run -A https://raw.githubusercontent.com/lj-n/wasted-time-playing-games/main/mod.ts --apiKey="Steam Api Key here" --steamId="Steam User ID here"
 ```
 
 Should result in something like this:
