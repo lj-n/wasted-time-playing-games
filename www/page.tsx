@@ -48,7 +48,7 @@ export function Page({ error, games, profile }: PageProps) {
 				<input type="text" name="apiKey" id="apy-key" />
 			</label>
 			<label>
-				Steam id
+				Steam ID
 				<input
 					type="text"
 					name="steamId"
@@ -74,7 +74,7 @@ export function Page({ error, games, profile }: PageProps) {
 					/>
 					<div>
 						<h2>{profile.profileName}</h2>
-						<span>Steam id: {profile.steamId}</span>
+						<span>Steam ID: {profile.steamId}</span>
 					</div>
 				</div>
 				<span class="total">
