@@ -18,7 +18,7 @@ async function handler(req: Request) {
 	const { searchParams, pathname } = new URL(req.url);
 
   if (pathname.startsWith("/robots.txt")) {
-    const file = await Deno.readFile("./robots.txt");
+    const file = await Deno.readFile("www/robots.txt");
     return new Response(file, {
       headers: {
         "content-type": "text/plain",
