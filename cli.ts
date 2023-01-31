@@ -1,5 +1,5 @@
-import { parse } from "https://deno.land/std@0.175.0/flags/mod.ts";
-import * as cl from "https://deno.land/std@0.175.0/fmt/colors.ts";
+import { parse } from "std/flags/mod.ts";
+import * as cl from "std/fmt/colors.ts";
 import { formatMinutes, getGameData, getProfileData } from "./mod.ts";
 
 /** Parse command line arguments into structured data */
