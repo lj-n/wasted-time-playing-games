@@ -15,8 +15,19 @@ function getReponse(html: string) {
 }
 
 async function handler(req: Request) {
+	const { searchParams, pathname } = new URL(req.url);
+
+  if (pathname.startsWith("/robots.txt")) {
+    const file = await Deno.readFile("./robots.txt");
+    return new Response(file, {
+      headers: {
+        "content-type": "text/plain",
+      },
+    });
+  }
+
+
 	/** User Input */
-	const { searchParams } = new URL(req.url);
 	const steamId = searchParams.get("steamId");
 	const apiKey = searchParams.get("apiKey") || STEAM_API_KEY;
 
