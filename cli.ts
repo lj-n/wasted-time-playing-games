@@ -1,14 +1,17 @@
-// import { parse } from "https://deno.land/std@0.175.0/flags/mod.ts";
+import { parse } from "https://deno.land/std@0.175.0/flags/mod.ts";
+import * as fmt from "https://deno.land/std@0.175.0/fmt/colors.ts";
 // import { getUserData } from "./data.ts";
 
 /** Parse command line arguments into structured data */
-// const { apiKey, userId, silent } = parse(Deno.args, {
-//   string: ["apiKey", "userId"],
-//   boolean: ["silent"],
-//   default: { silent: true },
-// });
+const { apiKey, userId, silent } = parse(Deno.args, {
+  string: ["apiKey", "userId"],
+  boolean: ["silent"],
+  default: { silent: true },
+});
 
 // getUserData({ apiKey, userId, silent });
+
+// if(!apiKey)
 
 // CLI JUST HERE
 
