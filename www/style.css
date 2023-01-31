@@ -1,3 +1,4 @@
+/* Base */
 * {
 	box-sizing: border-box;
 	padding: 0;
@@ -17,20 +18,16 @@ body {
 	padding: 1rem;
 	overflow-y: scroll;
 }
-
 h1 {
 	font-size: 1.75rem;
 	text-align: center;
 }
-
-span.total {
-	margin: 2rem 0;
-	text-align: center;
+a:visited {
+	color: black;
 }
-span.error {
-	margin: 1rem 0;
-	text-align: center;
-	color: #f43f5e;
+a:hover {
+	text-decoration: underline wavy;
+	text-decoration-color: #6366f1;
 }
 
 /* Profile Infos */
@@ -55,6 +52,10 @@ div.profile > div span {
 }
 
 /* Data Table */
+span.total {
+	margin: 2rem 0;
+	text-align: center;
+}
 h3 {
 	font-size: small;
 	color: #57534e;
@@ -99,7 +100,8 @@ form input::placeholder {
 	font-style: italic;
 	font-size: 1rem;
 }
-form input:focus, button:focus {
+form input:focus,
+button:focus {
 	border: 1px solid #6366f1;
 	outline: 2px solid #6366f145;
 }
@@ -123,9 +125,14 @@ form button:hover {
 form button:active {
 	background-color: #a5b4fc;
 }
+span.error {
+	margin: 1rem 0;
+	text-align: center;
+	color: #f43f5e;
+}
 
 /* Info Label */
-p.info {
+div.info {
 	position: relative;
 	display: flex;
 	align-items: center;
@@ -139,7 +146,7 @@ p.info {
 	background-color: #fafaf9;
 	margin: 0;
 }
-p.info::after {
+div.info::after {
 	content: "";
 	position: absolute;
 	height: 100%;
@@ -148,22 +155,28 @@ p.info::after {
 	top: 0;
 	background-color: #c7d2fe;
 }
-p.info::before {
+div.info::before {
 	content: "🛸 <";
 	font-style: normal;
 	white-space: nowrap;
 	padding-right: 0.5rem;
 }
-p.info a {
-	display: contents;
-}
-a:hover {
-	text-decoration: wavy;
-}
+
 /* Divider */
 div.divider {
 	width: 100%;
 	height: 2px;
 	margin: 2rem 0;
 	background-color: #e7e5e4;
+}
+
+/* Footer */
+footer {
+	margin-top: auto;
+	padding-top: 1rem;
+	display: flex;
+}
+footer a {
+	margin: 0 auto;
+	font-size: small;
 }
