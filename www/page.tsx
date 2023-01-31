@@ -67,6 +67,8 @@ export function Page({ error, games, profile }: PageProps) {
             <img
               src={profile.avatar}
               alt={`${profile.profileName} Steam Avatar`}
+              height="64px"
+              width="64px"
             />
             <div>
               <h2>{profile.profileName}</h2>
@@ -92,7 +94,7 @@ export function Page({ error, games, profile }: PageProps) {
   );
 
   return (
-    <html>
+    <html lang="en">
       <head>
         <title>Get Your Total Played Steam Hours</title>
         <meta charset="UTF-8" />
