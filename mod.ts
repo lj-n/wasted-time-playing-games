@@ -1,5 +1,15 @@
 import { z } from "https://deno.land/x/zod@v3.20.2/mod.ts";
 
+export const formatMinutes = (m: number) => {
+  const h = Math.floor(m / 60);
+  m = m % 60;
+
+  const hours = h === 1 ? "1 hour" : h > 1 ? `${h} hours` : "";
+  const minutes = m === 1 ? "1 minute" : m > 1 ? `${m} minutes` : "";
+
+  return `${hours} ${minutes}`.trim();
+};
+
 export type ProfileData = Awaited<ReturnType<typeof getProfileData>>;
 export type GameData = Awaited<ReturnType<typeof getGameData>>;
 
@@ -43,7 +53,6 @@ export async function getGameData(options: GetSteamDataArgs) {
   });
 
   const res = await fetch(url + params);
-  console.log(res);
   const data = await res.json();
 
   const GamesSchema = z.array(z.object({
