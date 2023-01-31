@@ -36,7 +36,7 @@ span.error {
 /* Profile Infos */
 div.profile {
 	display: flex;
-	gap: 2rem;
+	gap: 1rem;
 	margin: 0 auto;
 }
 div.profile img {
@@ -51,9 +51,15 @@ div.profile > div {
 }
 div.profile > div span {
 	font-size: 0.875rem;
+	color: #57534e;
 }
 
 /* Data Table */
+h3 {
+	font-size: small;
+	color: #57534e;
+	font-weight: 400;
+}
 td {
 	vertical-align: top;
 }
@@ -78,11 +84,20 @@ form label {
 	gap: 0.125rem;
 	font-size: 0.875rem;
 }
+form label > span {
+	color: #78716c;
+	font-size: small;
+	display: contents;
+}
 form input {
 	padding: 0.5rem;
 	border: 1px solid #a8a29e;
-	border-radius: 0.25rem;
+	border-radius: 0.125rem;
 	font-size: 1.25rem;
+}
+form input::placeholder {
+	font-style: italic;
+	font-size: 1rem;
 }
 form input:focus, button:focus {
 	border: 1px solid #6366f1;
@@ -90,15 +105,15 @@ form input:focus, button:focus {
 }
 form button {
 	all: unset;
-	margin: auto;
+	margin-left: auto;
 	margin-top: 2rem;
 	background-color: #a5b4fc;
-	padding: 0.5rem 1rem;
+	padding: 0.5rem 2rem;
 	border: none;
 	color: #292524;
 	font-size: 0.875rem;
 	font-weight: 400;
-	border-radius: 0.25rem;
+	border-radius: 0.125rem;
 }
 form button:hover {
 	background-color: #c7d2fe;
@@ -142,7 +157,9 @@ p.info::before {
 p.info a {
 	display: contents;
 }
-
+a:hover {
+	text-decoration: wavy;
+}
 /* Divider */
 div.divider {
 	width: 100%;

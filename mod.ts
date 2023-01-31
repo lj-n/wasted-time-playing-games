@@ -32,15 +32,17 @@ export async function getProfileData(options: GetSteamDataArgs) {
     steamid: z.string(),
     personaname: z.string(),
     avatarmedium: z.string(),
+    profileurl: z.string(),
   });
 
   const {
     avatarmedium: avatar,
     personaname: profileName,
     steamid: steamId,
+    profileurl: profileURL,
   } = ProfileSchema.parse(data.response.players[0]);
 
-  return { avatar, steamId, profileName };
+  return { avatar, steamId, profileName, profileURL };
 }
 
 export async function getGameData(options: GetSteamDataArgs) {

@@ -25,29 +25,32 @@ interface PageProps {
 export function Page({ error, games, profile }: PageProps) {
   const Form = render(
     <form action="/">
+      <label>
+        Steam ID
+        <input
+          required
+          type="text"
+          name="steamId"
+          id="steam-id"
+          placeholder="Steam ID"
+        />
+      </label>
+
+      <label>
+        Steam Web API Key <span>(optional)</span>
+        <input type="text" name="apiKey" id="apy-key" />
+      </label>
+
       <p class="info">
-        If you provide no Steam web api key, the user profile must be public!
-        You can{" "}
+        If you provide no Steam Web Api Key, the Steam ID's user profile must be
+        public! You can{" "}
         <a href="https://steamcommunity.com/dev/apikey">
           create an api key here
         </a>
         .
       </p>
-      <label>
-        Steam web api key
-        <input type="text" name="apiKey" id="apy-key" />
-      </label>
-      <label>
-        Steam ID
-        <input
-          type="text"
-          name="steamId"
-          id="steam-id"
-          palceholder="steam user id"
-        />
-      </label>
 
-      <button type="submit">sum my hours</button>
+      <button type="submit">get total sum</button>
     </form>,
   );
 
@@ -57,12 +60,14 @@ export function Page({ error, games, profile }: PageProps) {
         <>
           <div class="divider" />
           <div class="profile">
-            <img
-              src={profile.avatar}
-              alt={`${profile.profileName} Steam Avatar`}
-              height="64px"
-              width="64px"
-            />
+            <a href={profile.profileURL}>
+              <img
+                src={profile.avatar}
+                alt={`${profile.profileName} Steam Avatar`}
+                height="64px"
+                width="64px"
+              />
+            </a>
             <div>
               <h2>{profile.profileName}</h2>
               <span>Steam ID: {profile.steamId}</span>
@@ -72,7 +77,7 @@ export function Page({ error, games, profile }: PageProps) {
             📜 You played a total of{" "}
             <strong>{formatMinutes(games.totalPlaytime)}</strong>!
           </span>
-          Your top played games are:
+          <h3>Your top played games are:</h3>
           <table>
             {games.mostPlayed.map((g) => (
               <tr>
@@ -117,6 +122,10 @@ export function Page({ error, games, profile }: PageProps) {
         <Form />
 
         {error ? <span class="error">{error}</span> : null}
+
+        <footer>
+          <a href="">Sourcecode</a>
+        </footer>
       </body>
     </html>
   );
