@@ -1,68 +1,68 @@
-import { parse } from "https://deno.land/std@0.175.0/flags/mod.ts";
 import { z } from "https://deno.land/x/zod@v3.20.2/mod.ts";
 
-/** Parse command line arguments into structured data */
-const { apiKey, steamId, silent } = parse(Deno.args, {
-  string: ["apiKey", "steamId"],
-  boolean: ["silent"],
-  default: { silent: true },
-});
+export type ProfileData = Awaited<ReturnType<typeof getProfileData>>;
+export type GameData = Awaited<ReturnType<typeof getGameData>>;
 
-try {
-  if (!apiKey || !steamId) {
-    throw new Error("Please provide a steam api key and an user id.");
-  }
+interface GetSteamDataArgs {
+  steamId: string;
+  apiKey: string;
+}
 
+export async function getProfileData(options: GetSteamDataArgs) {
+  const url = "https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?";
   const params = new URLSearchParams({
-    key: apiKey,
+    key: options.apiKey,
+    steamids: options.steamId,
+  });
+
+  const res = await fetch(url + params);
+  const data = await res.json();
+
+  const ProfileSchema = z.object({
+    steamid: z.string(),
+    personaname: z.string(),
+    avatarmedium: z.string(),
+  });
+
+  const {
+    avatarmedium: avatar,
+    personaname: profileName,
     steamid: steamId,
+  } = ProfileSchema.parse(data.response.players[0]);
+
+  return { avatar, steamId, profileName };
+}
+
+export async function getGameData(options: GetSteamDataArgs) {
+  const url = "https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?";
+  const params = new URLSearchParams({
+    key: options.apiKey,
+    steamid: options.steamId,
     include_appinfo: "true",
     include_played_free_games: "true",
   });
 
-  const url = "https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?";
-
   const res = await fetch(url + params);
-
-  if (!res.ok) {
-    throw new Error(
-      res.status + ": " + res.statusText +
-        ", Probably wrong Api-Key or User-ID",
-    );
-  }
-
+  console.log(res);
   const data = await res.json();
 
-  const GamesSchema = z.object({
+  const GamesSchema = z.array(z.object({
     name: z.string(),
     playtime_forever: z.number(),
-  }).array();
+  }));
 
   const games = GamesSchema.parse(data.response.games);
-
-  const sum = games.reduce((acc, game) => acc + game.playtime_forever, 0);
-
-  console.log(
-    `%c\n🎲 Found ${games.length} Games, with a total playtime of %c${
-      Math.round(sum / 60)
-    }%c hours!\n`,
-    "color: orange",
-    "font-weight: bold; color: orange",
-    "font-weight: normal; color: orange",
+  const totalPlaytime = games.reduce(
+    (acc, game) => acc + game.playtime_forever,
+    0,
   );
 
-  /** Log the three most played games */
+  /** Get the three most played games */
   games.sort((a, b) => b.playtime_forever - a.playtime_forever);
+  const mostPlayed = games.slice(0, 3).map((g) => ({
+    name: g.name,
+    playtime: g.playtime_forever,
+  }));
 
-  console.log("Your three most played games are:");
-
-  const topGames: { [key: string]: number } = {};
-  for (let i = 0; i < 3; i++) {
-    topGames[games[i].name] = Math.round(games[i].playtime_forever / 60);
-  }
-
-  console.table(topGames);
-} catch (error) {
-  console.log(`%c\n💡 ${error.message}\n`, "color: red");
-  if (!silent) console.log(error.stack);
+  return { totalPlaytime, mostPlayed };
 }
