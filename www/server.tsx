@@ -7,7 +7,7 @@ import { h, renderSSR } from "https://deno.land/x/nano_jsx@v0.0.36/mod.ts";
 import { getGameData, getProfileData } from "../mod.ts";
 import { Page } from "./page.tsx";
 
-const { STEAM_API_KEY } = await dotenv.load({ envPath: "www/.env" });
+const { STEAM_API_KEY } = await dotenv.load();
 
 function getReponse(html: string) {
   const headers = new Headers({ "content-type": "text/html; charset=utf-8" });
