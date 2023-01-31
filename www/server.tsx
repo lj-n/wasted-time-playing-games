@@ -7,7 +7,6 @@ import { getGameData, getProfileData } from "../mod.ts";
 import { Page } from "./page.tsx";
 
 const STEAM_API_KEY = Deno.env.get("STEAM_API_KEY") as string;
-console.log("FOUND ENV API KEY", STEAM_API_KEY);
 
 function getReponse(html: string) {
 	const headers = new Headers({ "content-type": "text/html; charset=utf-8" });
