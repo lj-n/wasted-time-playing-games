@@ -38,7 +38,7 @@ export function Page({ error, games, profile }: PageProps) {
       <p class="info">
         If you provide no Steam web api key, the user profile must be public!
         You can create an api key{" "}
-        <a href="https://steamcommunity.com/dev/apikey">here</a>.
+        <a href="https://steamcommunity.com/dev/apikey" title="Go to the steam web api key site">here</a>.
       </p>
       <label>
         Steam web api key

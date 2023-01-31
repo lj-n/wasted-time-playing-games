@@ -9,47 +9,36 @@ import { Page } from "./page.tsx";
 
 const { STEAM_API_KEY } = await dotenv.load({ envPath: "www/.env" });
 
+function getReponse(html: string) {
+	const headers = new Headers({ "content-type": "text/html; charset=utf-8" });
+	return new Response(`<!DOCTYPE html>${html}`, { headers });
+}
+
 async function handler(req: Request) {
-  /** User Input */
-  const { searchParams } = new URL(req.url);
-  const steamId = searchParams.get("steamId");
-  const apiKey = searchParams.get("apiKey") || STEAM_API_KEY;
+	/** User Input */
+	const { searchParams } = new URL(req.url);
+	const steamId = searchParams.get("steamId");
+	const apiKey = searchParams.get("apiKey") || STEAM_API_KEY;
 
-  if (!steamId) {
-    return new Response(renderSSR(<Page />), {
-      headers: {
-        "content-type": "text/html; charset=utf-8",
-      },
-    });
-  }
+	if (!steamId) {
+		return getReponse(renderSSR(<Page />));
+	}
 
-  try {
-    const [profile, games] = await Promise.all([
-      getProfileData({ steamId, apiKey }),
-      getGameData({ steamId, apiKey }),
-    ]);
+	try {
+		const [profile, games] = await Promise.all([
+			getProfileData({ steamId, apiKey }),
+			getGameData({ steamId, apiKey }),
+		]);
 
-    return new Response(
-      renderSSR(<Page profile={profile} games={games} />),
-      {
-        headers: {
-          "content-type": "text/html; charset=utf-8",
-        },
-      },
-    );
-  } catch (error) {
-    console.log(error);
-    return new Response(
-      renderSSR(
-        <Page error="This did not work, sorry! Be sure to use a valid steam user id or api key!" />,
-      ),
-      {
-        headers: {
-          "content-type": "text/html; charset=utf-8",
-        },
-      },
-    );
-  }
+		return getReponse(renderSSR(<Page profile={profile} games={games} />));
+	} catch (error) {
+		console.log(error);
+		return getReponse(
+			renderSSR(
+				<Page error="This did not work, sorry! Be sure to use a valid steam user id or api key!" />
+			)
+		);
+	}
 }
 
 serve(handler);
