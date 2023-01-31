@@ -1,5 +1,6 @@
 /** @jsx h */
 
+import "https://deno.land/x/dotenv@v3.2.0/load.ts";
 import { serve } from "https://deno.land/std@0.175.0/http/server.ts";
 import { h, renderSSR } from "https://deno.land/x/nano_jsx@v0.0.36/mod.ts";
 
